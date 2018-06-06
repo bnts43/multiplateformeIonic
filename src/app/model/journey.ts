@@ -1,5 +1,6 @@
 import * as firebase from "firebase";
 import Timestamp = firebase.firestore.Timestamp;
+import { User } from "./user";
 
 export class Journey {
   Destination: string;
@@ -7,7 +8,7 @@ export class Journey {
   Depart: string;
   passengerNb: number;
   Status: string;
-  passengerList: any;
+  passengerList: User[];
   prix: number;
   driver: any;
 }
