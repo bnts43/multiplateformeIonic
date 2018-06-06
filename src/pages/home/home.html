@@ -11,4 +11,9 @@
   <p>
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
   </p>
+  <ion-list>
+		<ion-item class="trajet" *ngFor="let journey of journeys | async">
+			{{journey.Depart}} - {{journey.Destination}}
+		</ion-item>
+	</ion-list>
 </ion-content>
