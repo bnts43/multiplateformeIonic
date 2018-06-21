@@ -12,11 +12,13 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/dat
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
 import { FIREBASE_CONFIG } from './app.firebase.config';
+import { TrajetDetail } from '../pages/journey/trajet-detail';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    TrajetDetail
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    TrajetDetail
   ],
   providers: [
     StatusBar,
