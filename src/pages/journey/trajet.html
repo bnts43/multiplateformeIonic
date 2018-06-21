@@ -2,22 +2,17 @@
   <ion-content padding="true" class="has-header">
     <form id="trajet-form6" class="list">
       <ion-item class="item-avatar" id="trajet-list-item11">
-        <h2>Name</h2>
+        <h2>{{journey.Name}}</h2>
       </ion-item>
       <div class="spacer" style="width: 300px; height: 33px;"></div>
       <label class="item item-input" id="trajet-textarea1">
-        <span class="input-label"></span><textarea placeholder="From"></textarea></label>
+        <span class="input-label"></span><textarea placeholder="From">{{journey.Depart}}</textarea></label>
       <label class="item item-input" id="trajet-textarea2">
-        <span class="input-label"></span><textarea placeholder="To"></textarea></label>
+        <span class="input-label"></span><textarea placeholder="To">{{journey.Destination}}</textarea></label>
       <div class="spacer" style="width: 300px; height: 34px;"></div>
       <div id="trajet-markdown4" class="show-list-numbers-and-dots">
-        <p style="color:#000000;">Bla</p>
-
-        <p style="color:#000000;">Ici le texte expliquatif du conducteur.</p>
-
-        <p style="color:#000000;">bla</p>
-
-        <p style="color:#000000;">Car</p>
+        <p style="color:#000000;">{{journey.prix}}</p>
+        <p style="color:#000000;">{{journey.Status}}</p>
       </div>
       <label class="item item-select" id="trajet-select2">
         <span class="input-label">Reserver</span>
