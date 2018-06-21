@@ -7,23 +7,12 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
   <ion-list>
-		<ion-item class="trajet" *ngFor="let journey of journeys | async">
-			{{journey.Depart}} - {{journey.Destination}}
-		</ion-item>
+		<ion-card class="trajet" *ngFor="let journey of journeys | async" >
+      <ion-item (click)="navigateToJourney(journey.ref)">
+			  <a href="#"  >{{journey.id}} - {{journey.Depart}} - {{journey.Destination}}</a>
+      </ion-item>
+    </ion-card>
 	</ion-list>
 </ion-content>
-<!--<ion-view id="Home">
-  <ion-tabs class="tabs-stable tabs-icon-top">
-    <ion-tab title="Home">
-    </ion-tab>
-    <ion-tab title="My Account">
-    </ion-tab>
-    <ion-tab title="Settings">
-    </ion-tab>
-  </ion-tabs>
-</ion-view>-->
+

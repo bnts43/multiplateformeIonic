@@ -1,8 +1,13 @@
-<ion-view title="Trajet" id="page12">
-  <ion-content padding="true" class="has-header">
+<ion-header>
+    <ion-navbar>
+      <ion-title id="page12">Trajet</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding="true" class="has-header">
     <form id="trajet-form6" class="list">
       <ion-item class="item-avatar" id="trajet-list-item11">
-        <h2>{{journey.Name}}</h2>
+        <h2>Trajet : {{journey.Depart}} à {{journey.Destination}}</h2>
       </ion-item>
       <div class="spacer" style="width: 300px; height: 33px;"></div>
       <label class="item item-input" id="trajet-textarea1">
@@ -25,4 +30,3 @@
       <button id="trajet-button8" class="button button-positive button-block">Reserver maintenant</button>
     </form>
   </ion-content>
-</ion-view>
