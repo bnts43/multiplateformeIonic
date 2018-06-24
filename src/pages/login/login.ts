@@ -1,15 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, AlertController, NavParams, IonicPage } from 'ionic-angular';
 
-
-import { Observable } from 'rxjs/Observable';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { User } from '../../app/model/User';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../home/home';
 import { Signup } from '../signup/signup';
-
-
 
 @IonicPage()
 @Component({
@@ -30,19 +24,16 @@ export class Login {
   
     alert(message: string) {
       this.alertCtrl.create({
-        title: 'Info!',
+        title: 'Bienvenue !',
         subTitle: message,
         buttons: ['OK']
       }).present();
     }
   
-    signInUser() {
-      // this.alert(this.username.value+" et merde");
-      
+    signInUser() {      
       this.fire.auth.signInWithEmailAndPassword(this.username.value , this.password.value)
       .then( data => {
-        console.log('got some data', this.fire.auth.currentUser);
-        this.alert('Success! You\'re logged in');
+        this.alert('Connexion réussie :)');
         this.navCtrl.setRoot( HomePage );
         // user is logged in
       })
@@ -50,7 +41,6 @@ export class Login {
         console.log('got an error', error);
         this.alert(error.message);
       })
-      // console.log('Would sign in with ', this.username.value, this.password.value);
     }
     navigateToSignup(){
       this.navCtrl.push(Signup)

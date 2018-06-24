@@ -15,6 +15,7 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
 import { Signup } from '../pages/signup/signup';
 import { TrajetDetail } from '../pages/journey/trajet-detail';
 import { Login } from '../pages/login/login';
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { Login } from '../pages/login/login';
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    MomentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

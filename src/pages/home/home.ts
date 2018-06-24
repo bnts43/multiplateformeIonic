@@ -9,6 +9,9 @@ import { map } from 'rxjs/operators';
 import { TrajetDetail } from '../journey/trajet-detail';
 import { AngularFireAuth } from 'angularfire2/auth';
 
+import * as firebase from "firebase";
+import Timestamp = firebase.firestore.Timestamp;
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -30,11 +33,10 @@ export class HomePage {
         return { id, ref, ...data };
       }))
     );
-    //this.journeys.subscribe( (j : Journey[] ) => j.forEach((i : any) => console.log(i)));
     this.email = this.fire.auth.currentUser.email;
   }
 
-  navigateToJourney(journeyDocRef?: DocumentReference) {
+  navigateToJourney(journeyDocRef?: DocumentReference, journeyDate?: Timestamp) {
     if (journeyDocRef == null) {
       let newJourney:any = {Depart:'Adresse de départ',Destination:'Adresse de destination'};
       
@@ -44,7 +46,15 @@ export class HomePage {
         this.navCtrl.push(TrajetDetail,{'docJourney': journeyDocRef})
       });
     } else {
-      this.navCtrl.push(TrajetDetail,{'docJourney': journeyDocRef})
+      if (journeyDate != null)
+        {
+          let dateJourney = JSON.stringify(journeyDate.toDate.apply(journeyDate) as Date);
+        this.navCtrl.push(TrajetDetail,
+            {
+                'docJourney': journeyDocRef,
+                'dateJourney': journeyDate
+            });
+        }
     }
   }
 }
