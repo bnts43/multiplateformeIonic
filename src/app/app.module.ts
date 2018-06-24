@@ -12,13 +12,17 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/dat
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
 import { FIREBASE_CONFIG } from './app.firebase.config';
+import { Signup } from '../pages/signup/signup';
 import { TrajetDetail } from '../pages/journey/trajet-detail';
+import { Login } from '../pages/login/login';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    TrajetDetail
+    TrajetDetail,
+    Login,
+    Signup
   ],
   imports: [
     BrowserModule,
@@ -32,7 +36,9 @@ import { TrajetDetail } from '../pages/journey/trajet-detail';
   entryComponents: [
     MyApp,
     HomePage,
-    TrajetDetail
+    TrajetDetail,
+    Login,
+    Signup
   ],
   providers: [
     StatusBar,

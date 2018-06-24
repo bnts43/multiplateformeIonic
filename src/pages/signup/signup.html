@@ -1,22 +1,19 @@
-<ion-view title="Signup" id="page9">
-  <ion-content padding="true" class="has-header">
-    <form id="signup-form2" class="list">
-      <ion-list id="signup-list3">
-        <label class="item item-input" id="signup-input3">
-          <span class="input-label" >Name</span>
-          <input type="text" placeholder="" #username>
-        </label>
-        <label class="item item-input" id="signup-input4">
-          <span class="input-label">Email</span>
-          <input type="email" placeholder="" #username>
-        </label>
-        <label class="item item-input" id="signup-input5">
-          <span class="input-label">Password</span>
-          <input type="text" placeholder="">
-        </label>
-      </ion-list>
-      <button id="signup-button3" class="button button-stable button-block">Sign up</button>
-    </form>
-    <a ui-sref="accueil.login()" id="signup-button7" class="button button-positive button-block button-clear">Or log in your account</a>
-  </ion-content>
-</ion-view>
+<ion-content title="Signup" id="page9" padding="true" class="has-header">
+  <form id="signup-form2" class="list">
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text" #username></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" #password></ion-input>
+      </ion-item>
+      
+    </ion-list>
+    <button id="signup-button3" class="button button-stable button-block" (click)="registerUser()">Sign up</button>
+  </form>
+  <a id="signup-button7" class="button button-positive button-block button-clear" (click)="navigateToLogin()">Or log in your account</a>
+</ion-content>

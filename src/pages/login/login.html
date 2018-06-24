@@ -1,18 +1,20 @@
-<ion-view title="Login" id="page8">
-  <ion-content padding="true" class="has-header">
+
+  <ion-content title="Login" id="page8" padding="true" class="has-header">
     <form id="login-form1" class="list">
-      <ion-list id="login-list2">
-        <label class="item item-input" id="login-input1">
-          <span class="input-label">Email</span>
-          <input type="email" placeholder="" #username>
-        </label>
-        <label class="item item-input" id="login-input2">
-          <span class="input-label">Password</span>
-          <input type="password" placeholder="" #password>
-        </label>
+      <ion-list>
+
+        <ion-item>
+          <ion-label floating>Username</ion-label>
+          <ion-input type="text" #username></ion-input>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" #password></ion-input>
+        </ion-item>
+        
       </ion-list>
-      <button id="login-button1" class="button button-stable button-block">Log in</button>
-      <a ui-sref="accueil.signup()" id="login-button2" class="button button-positive button-block button-clear">Or create an account</a>
+      <button id="login-button1" class="button button-stable button-block" (click)="signInUser()">Log in</button>
+      <a id="login-button2" class="button button-positive button-block button-clear" (click)="navigateToSignup()">Or create an account</a>
     </form>
   </ion-content>
-</ion-view>

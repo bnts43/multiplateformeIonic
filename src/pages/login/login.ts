@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, AlertController, NavParams } from 'ionic-angular';
+import { NavController, AlertController, NavParams, IonicPage } from 'ionic-angular';
 
 
 import { Observable } from 'rxjs/Observable';
@@ -7,7 +7,11 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 import { User } from '../../app/model/User';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../home/home';
+import { Signup } from '../signup/signup';
 
+
+
+@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -21,7 +25,7 @@ export class Login {
     }
   
     ionViewDidLoad() {
-      console.log('ionViewDidLoad LoginPage');
+      console.log('ionViewDidLoad Login');
     }
   
     alert(message: string) {
@@ -33,7 +37,9 @@ export class Login {
     }
   
     signInUser() {
-      this.fire.auth.signInWithEmailAndPassword(this.username.value + '@domian.xta', this.password.value)
+      // this.alert(this.username.value+" et merde");
+      
+      this.fire.auth.signInWithEmailAndPassword(this.username.value , this.password.value)
       .then( data => {
         console.log('got some data', this.fire.auth.currentUser);
         this.alert('Success! You\'re logged in');
@@ -44,7 +50,10 @@ export class Login {
         console.log('got an error', error);
         this.alert(error.message);
       })
-      console.log('Would sign in with ', this.username.value, this.password.value);
+      // console.log('Would sign in with ', this.username.value, this.password.value);
+    }
+    navigateToSignup(){
+      this.navCtrl.push(Signup)
     }
 
 }

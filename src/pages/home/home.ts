@@ -7,6 +7,7 @@ import { Journey } from '../../app/model/journey';
 
 import { map } from 'rxjs/operators';
 import { TrajetDetail } from '../journey/trajet-detail';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'page-home',
@@ -14,10 +15,11 @@ import { TrajetDetail } from '../journey/trajet-detail';
 })
 export class HomePage {
   private itemsCollection: AngularFirestoreCollection<Journey>;
+  email: string;
   
   journeys: Observable<Journey[]>;
  
-  constructor(public navCtrl: NavController, afDB: AngularFirestore) {
+  constructor(public navCtrl: NavController, afDB: AngularFirestore, private fire: AngularFireAuth) {
     this.itemsCollection = afDB.collection<Journey>('Journeys');
     this.journeys = this.itemsCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
@@ -29,6 +31,7 @@ export class HomePage {
       }))
     );
     this.journeys.subscribe( (j : Journey[] ) => j.forEach((i : any) => console.log(i)));
+    this.email = this.fire.auth.currentUser.email;
   }
 
   navigateToJourney(docJourney: Journey) {
