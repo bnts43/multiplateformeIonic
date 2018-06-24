@@ -2,19 +2,14 @@
   <ion-content title="Login" id="page8" padding="true" class="has-header">
     <form id="login-form1" class="list">
       <ion-list>
-
         <ion-item>
-          <ion-label floating>Username</ion-label>
-          <ion-input type="text" #username></ion-input>
+          <ion-input type="text" #username placeholder="Username"></ion-input>
         </ion-item>
-      
         <ion-item>
-          <ion-label floating>Password</ion-label>
-          <ion-input type="password" #password></ion-input>
+          <ion-input type="password" #password placeholder="Password"></ion-input>
         </ion-item>
-        
       </ion-list>
-      <button id="login-button1" class="button button-stable button-block" (click)="signInUser()">Log in</button>
-      <a id="login-button2" class="button button-positive button-block button-clear" (click)="navigateToSignup()">Or create an account</a>
+      <button ion-button id="login-button1" class="button button-stable button-block" (click)="signInUser()">Log in</button>
+      <button id="login-button2" ion-button style="color:black" clear block (click)="navigateToSignup()">Or create an account</button>
     </form>
   </ion-content>

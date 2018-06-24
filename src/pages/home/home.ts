@@ -30,12 +30,21 @@ export class HomePage {
         return { id, ref, ...data };
       }))
     );
-    this.journeys.subscribe( (j : Journey[] ) => j.forEach((i : any) => console.log(i)));
+    //this.journeys.subscribe( (j : Journey[] ) => j.forEach((i : any) => console.log(i)));
     this.email = this.fire.auth.currentUser.email;
   }
 
-  navigateToJourney(docJourney: Journey) {
-    this.navCtrl.push(TrajetDetail,{'docJourney': docJourney})
+  navigateToJourney(journeyDocRef?: DocumentReference) {
+    if (journeyDocRef == null) {
+      let newJourney:any = {Depart:'Adresse de départ',Destination:'Adresse de destination'};
+      
+      this.itemsCollection.add(newJourney).then((newJourneyRef) => 
+      { 
+        journeyDocRef=newJourneyRef;
+        this.navCtrl.push(TrajetDetail,{'docJourney': journeyDocRef})
+      });
+    } else {
+      this.navCtrl.push(TrajetDetail,{'docJourney': journeyDocRef})
+    }
   }
-
 }

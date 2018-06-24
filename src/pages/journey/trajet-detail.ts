@@ -20,8 +20,7 @@ export class TrajetDetail {
           public navCtrl: NavController,
           public navParams: NavParams  ) {
       this.docRef = this.navParams.get("docJourney");
-      //docReference = new DocumentReference()
-      console.log("idJourney dans param => " + this.docRef.path) ;
+
       this.journeyDoc = this.afs.doc<Journey>(this.docRef);
       this.oJourney = this.journeyDoc.valueChanges();
       this.oJourney.subscribe((res) => 
@@ -30,8 +29,12 @@ export class TrajetDetail {
         this.journey = res;
       });
   } 
-  update(j: Journey) {
-    this.journeyDoc.update(j);
+  update() {
+    this.journeyDoc.update(this.journey);
+  }
+
+  delete() {
+    this.journeyDoc.delete();
   }
 
 }

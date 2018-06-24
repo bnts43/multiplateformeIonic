@@ -10,8 +10,12 @@
         <h2>Trajet : {{journey.Depart}} à {{journey.Destination}}</h2>
       </ion-item>
       <div class="spacer" style="width: 300px; height: 33px;"></div>
-      <label class="item item-input" id="trajet-textarea1">
-        <span class="input-label"></span><textarea placeholder="From">{{journey.Depart}}</textarea></label>
+      <ion-list>
+        <ion-item>
+          <ion-label color="primary">Départ :&nbsp;</ion-label>
+          <ion-input id="trajet-textarea1" value="{{journey.Depart}}"></ion-input>
+        </ion-item>
+      </ion-list>
       <label class="item item-input" id="trajet-textarea2">
         <span class="input-label"></span><textarea placeholder="To">{{journey.Destination}}</textarea></label>
       <div class="spacer" style="width: 300px; height: 34px;"></div>
@@ -27,6 +31,7 @@
           <option>3 personne</option>
         </select>
       </label>
-      <button id="trajet-button8" class="button button-positive button-block">Reserver maintenant</button>
+      <button ion-button id="trajet-button8" class="button button-positive button-block">Reserver maintenant</button>
+      <button ion-button id="delete-button" clear block color="danger" (click)="delete()">Supprimer le voyage</button>
     </form>
   </ion-content>
