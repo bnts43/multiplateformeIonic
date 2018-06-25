@@ -1,9 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, AlertController, NavParams, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, IonicPage } from 'ionic-angular';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../home/home';
 import { Signup } from '../signup/signup';
+
+import { ToastController } from 'ionic-angular';
+
 
 @IonicPage()
 @Component({
@@ -15,18 +18,27 @@ export class Login {
     @ViewChild('username') username;
     @ViewChild('password') password;
 
-    constructor(private alertCtrl: AlertController, private fire:AngularFireAuth,public navCtrl: NavController, public navParams: NavParams) {
-    }
+    constructor(
+        private fire:AngularFireAuth,
+        public navCtrl: NavController, 
+        public navParams: NavParams,
+        private toastCtrl: ToastController) { }
   
     ionViewDidLoad() {
       console.log('ionViewDidLoad Login');
+      if (this.fire.auth.currentUser != null) {
+        this.navCtrl.setRoot( HomePage );
+      }
+
     }
   
     alert(message: string) {
-      this.alertCtrl.create({
-        title: 'Bienvenue !',
-        subTitle: message,
-        buttons: ['OK']
+
+      this.toastCtrl.create({
+        message: message,
+        duration: 3000,
+        position: 'top',
+        showCloseButton: true
       }).present();
     }
   

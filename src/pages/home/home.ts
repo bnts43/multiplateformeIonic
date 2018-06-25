@@ -12,6 +12,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from "firebase";
 import Timestamp = firebase.firestore.Timestamp;
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -29,8 +31,9 @@ export class HomePage {
         const data = a.payload.doc.data() as Journey;
         const id = a.payload.doc.id;
         const ref = a.payload.doc.ref;
+        const dateION: string = moment(data.Date.toDate.apply(data.Date) as Date).format("DD/MM/YY H:mm");
 
-        return { id, ref, ...data };
+        return { id, ref, dateION, ...data };
       }))
     );
     this.email = this.fire.auth.currentUser.email;
@@ -38,7 +41,7 @@ export class HomePage {
 
   navigateToJourney(journeyDocRef?: DocumentReference, journeyDate?: Timestamp) {
     if (journeyDocRef == null) {
-      let newJourney:any = {Depart:'Adresse de départ',Destination:'Adresse de destination'};
+      let newJourney:any = {Depart:'',Destination:''};
       
       this.itemsCollection.add(newJourney).then((newJourneyRef) => 
       { 
@@ -46,9 +49,12 @@ export class HomePage {
         this.navCtrl.push(TrajetDetail,{'docJourney': journeyDocRef})
       });
     } else {
-      if (journeyDate != null)
+      if (journeyDate != null || (journeyDocRef != null && journeyDate == null))
         {
-          let dateJourney = JSON.stringify(journeyDate.toDate.apply(journeyDate) as Date);
+          if (journeyDate == null)
+          {
+            journeyDate = Timestamp.fromDate(new Date(Date.now.apply(new Date())));
+          }
         this.navCtrl.push(TrajetDetail,
             {
                 'docJourney': journeyDocRef,

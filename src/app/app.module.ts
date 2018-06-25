@@ -16,18 +16,27 @@ import { Signup } from '../pages/signup/signup';
 import { TrajetDetail } from '../pages/journey/trajet-detail';
 import { Login } from '../pages/login/login';
 import { MomentModule } from 'angular2-moment';
+import { AccountPage } from '../pages/account/account';
+import { HeaderNav } from '../pages/header';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     TrajetDetail,
+    AccountPage,
     Login,
+    HeaderNav,
     Signup
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      monthNames: ['janvier', 'février', 'mars', 'avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre' ],
+      monthShortNames: ['jan', 'fev', 'mar', 'avr','mai','jun','jul','aou','sep','oct','nov','dec' ],
+      dayNames: ['dimanche', 'lundi', 'mardi', 'mercredi','jeudi','vendredi','samedi' ],
+      dayShortNames: ['dim', 'lun', 'mar', 'mer','jeu','ven','sam' ],
+    }),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
@@ -40,6 +49,8 @@ import { MomentModule } from 'angular2-moment';
     HomePage,
     TrajetDetail,
     Login,
+    AccountPage,
+    HeaderNav,
     Signup
   ],
   providers: [

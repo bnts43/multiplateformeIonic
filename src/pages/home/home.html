@@ -1,17 +1,11 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Hi {{email}}
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<header-nav></header-nav>
 
 <ion-content padding>
-  
+
   <ion-list *ngFor="let journey of journeys | async" >
 		<ion-card  (click)="navigateToJourney(journey.ref, journey.Date)">
       <ion-item>
-          {{journey.Depart}} - {{journey.Destination}}
+          {{journey.Depart}} - {{journey.Destination}} - {{journey.dateION}}
       </ion-item>
     </ion-card>
   </ion-list>
