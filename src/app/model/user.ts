@@ -10,7 +10,7 @@ export class User {
     name: string;
     listRatings: Rating[];
     listVehicles: Vehicle[];
-    listReservedJourneys : Journey[];
+    listReservedJourneys : DocumentReference[];
     genre: string;
     date_naissance: Timestamp;
     email: string;

@@ -1,7 +1,7 @@
 
 <ion-content padding>
   
-    <ion-list *ngFor="let journey of journeys | async" >
+    <ion-list *ngFor="let journey of journeys" >
           <ion-card  (click)="navigateToJourney(journey.ref, journey.Date)">
         <ion-item>
             {{journey.Depart}} - {{journey.Destination}}

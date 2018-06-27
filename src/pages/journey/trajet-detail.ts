@@ -10,26 +10,32 @@ import * as firebase from "firebase";
 import Timestamp = firebase.firestore.Timestamp;
 
 import * as moment from 'moment';
+import { AngularFireAuth } from 'angularfire2/auth';
 
+import { User } from "../../app/model/user";
 
 @Component({
   selector: 'page-trajet',
   templateUrl: 'trajet.html'
 })
 export class TrajetDetail {
+
   maxDate: string = moment('31/12/2019', 'DD/MM/YYYY').toISOString();
   private journeyDoc: AngularFirestoreDocument<Journey>;
   private oJourney: Observable<Journey>;
   private docRef: DocumentReference;
   journey: Journey = new Journey();
   journeyDate: Timestamp ;
+  currentJourney: Journey;
   date: string;
+  private currentUser : User;
 
   constructor(
           private afs: AngularFirestore,
           public navCtrl: NavController,
           public navParams: NavParams,
-          private toastCtrl: ToastController ) {
+          private toastCtrl: ToastController ,
+          private fire: AngularFireAuth) {
       this.journeyDate = this.navParams.get("dateJourney");
       if (this.journeyDate != null) 
       {
@@ -42,28 +48,30 @@ export class TrajetDetail {
       this.journeyDoc = this.afs.doc<Journey>(this.docRef);
       this.oJourney = this.journeyDoc.valueChanges();
       this.oJourney.subscribe((res) => this.journey = res);
+      this.afs.collection<User>('Users', u => u.where('uuID','==',this.fire.auth.currentUser.uid))
+            .valueChanges().subscribe(u => this.currentUser = u[0]);
+
+  }
+  reserve(){
+    this.afs.collection<User>('Users', u => u.where('uuID','==',this.fire.auth.currentUser.uid))
+        .valueChanges().subscribe(u => {
+          this.currentUser = u[0];
+          let listJ = this.currentUser.listReservedJourneys;
+          if (listJ != null) {
+              listJ.push(this.docRef);
+          } else {
+            let newList : DocumentReference[] = [];
+            newList.push(this.docRef);
+            listJ = newList;
+          }
+          this.afs.doc<User>(this.currentUser.ref).update(this.currentUser);
+        });
   }
 
-
   update() {
-    let toastSaving = this.toastCtrl.create({
-      message: "sauvegarde en cours",
-      duration: 3000,
-      position: 'top',
-      showCloseButton: true
-    });
-    toastSaving.present();
-    let toastSaved = this.toastCtrl.create({
-      message: "sauvegarde réussie",
-      duration: 2000,
-      position: 'top',
-      showCloseButton: true
-    });
+
     this.journey.Date = Timestamp.fromDate(new Date(this.date));
-    this.journeyDoc.update(this.journey).then(()=> {
-      toastSaving.dismiss();
-      toastSaved.present();
-    });
+    this.journeyDoc.update(this.journey);
   }
 
   delete() {
