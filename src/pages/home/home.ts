@@ -26,13 +26,7 @@ export class HomePage {
  
   constructor(public navCtrl: NavController, afDB: AngularFirestore, private fire: AngularFireAuth) {
     if (this.fire.auth.currentUser != null) {
-        afDB
-            .collection<User>("Users", 
-                u => u.where('uuID','==',this.fire.auth.currentUser.uid))
-            .valueChanges()
-            .subscribe(u => {
-                this.currentUser = u[0];
-                this.itemsCollection = afDB.collection<Journey>('Journeys', j => j.where('ownerId','==',this.currentUser.uuID));
+                this.itemsCollection = afDB.collection<Journey>('Journeys', j => j.where('ownerId','==',this.fire.auth.currentUser.uid));
                 this.journeys = this.itemsCollection.snapshotChanges().pipe(
                   map(actions => actions.map(a => {
                     const data = a.payload.doc.data() as Journey;
@@ -48,10 +42,7 @@ export class HomePage {
                     return { id, ref, dateION, ...data };
                   }))
                 );
-            });
-        console.log(this.currentUser);
-       
-    } else {
+            } else {
       this.itemsCollection = afDB.collection<Journey>('Journeys');
     }
     
