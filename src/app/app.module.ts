@@ -16,6 +16,7 @@ import { Signup } from '../pages/signup/signup';
 import { TrajetDetail } from '../pages/journey/trajet-detail';
 import { Login } from '../pages/login/login';
 import { MomentModule } from 'angular2-moment';
+import { ReservedJourneys } from '../pages/reservedJourneys/reservedJourneys';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MomentModule } from 'angular2-moment';
     HomePage,
     TrajetDetail,
     Login,
-    Signup
+    Signup,
+    ReservedJourneys
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { MomentModule } from 'angular2-moment';
     HomePage,
     TrajetDetail,
     Login,
-    Signup
+    Signup,
+    ReservedJourneys
   ],
   providers: [
     StatusBar,
