@@ -16,5 +16,92 @@
 // automatically applied to the <body> element in the app.
 
 ion-content {
-    top: 3em;
+    top: 4em;
+    font-family: sans-serif;
+    background-image: url("../assets/imgs/background.png");
+    min-height: 500px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 0 3em;
+}
+
+
+body {
+    font-family: sans-serif;
+    background-image: url("../assets/imgs/background.png");
+    min-height: 500px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 0 3em;
+}
+
+.review {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 1em ;
+    line-height: 1.5em;
+    margin: 1em;
+    color: white;
+}
+
+.review img {
+    width:30%;
+    margin:0 auto;
+    display:block;
+}
+
+h1 {
+    color:white;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-shadow: black 1px 1px 3px;
+}
+.review h1 {
+    font-size: 0.75em;
+    margin-bottom: 0em;
+    padding-bottom: 0em;
+}
+.review p {
+    padding: 0;
+    margin: 0;
+    font-size: 0.75em;
+    line-height: 1em;
+}
+
+.review p.signature {
+    font-weight: bold;
+}
+
+h2 {
+    color:white;
+    text-align: center;
+    font-weight: normal;
+    text-shadow: black 1px 1px 3px;
+    font-size: 0.75em;
+}
+
+.inputitem input, button.btnsearch {
+    font-size: 0.75em;
+}
+
+.row_reviews {
+    justify-content: center;
+}
+
+.searchfields {
+    justify-content: center;
+}
+
+div.review {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+div.heading1 {
+    justify-content: center;
+}
+
+div.heading1 h1 {
+    text-align: left;
 }

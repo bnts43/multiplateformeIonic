@@ -25,7 +25,7 @@ import { User } from "../../app/model/user";
 
     constructor(public navCtrl: NavController, private afs: AngularFirestore, private fire: AngularFireAuth) {
         // recuperer la liste des journeys reservé et les afficher 
-        let userRef = this.afs.collection<User>('users', u => u.where('authid', '==', this.fire.auth.currentUser.uid));
-        userRef.valueChanges().subscribe(u=> this.journeys = u[0].listReservedJourneys);
+        let userRef = this.afs.collection<User>('users', u => u.where('uuID', '==', this.fire.auth.currentUser.uid));
+        //userRef.valueChanges().subscribe(u=> this.journeys = u[0].listReservedJourneys);
       }
   }

@@ -7,7 +7,6 @@ import Timestamp = firebase.firestore.Timestamp;
 import { DocumentReference } from "angularfire2/firestore";
 
 export class User {
-    authid:string
     name: string;
     listRatings: Rating[];
     listVehicles: Vehicle[];

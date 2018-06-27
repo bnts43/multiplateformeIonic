@@ -13,7 +13,6 @@ import * as firebase from "firebase";
 import Timestamp = firebase.firestore.Timestamp;
 
 import * as moment from 'moment';
-import { User } from '../../app/model/user';
 
 @Component({
   selector: 'page-home',
@@ -22,9 +21,8 @@ import { User } from '../../app/model/user';
 export class HomePage {
   private itemsCollection: AngularFirestoreCollection<Journey>;  
   journeys: Observable<Journey[]>;
-  currentUser: User;
  
-  constructor(public navCtrl: NavController, afDB: AngularFirestore, private fire: AngularFireAuth) {
+  constructor(public navCtrl: NavController, private afDB: AngularFirestore, private fire: AngularFireAuth) {
     if (this.fire.auth.currentUser != null) {
                 this.itemsCollection = afDB.collection<Journey>('Journeys', j => j.where('ownerId','==',this.fire.auth.currentUser.uid));
                 this.journeys = this.itemsCollection.snapshotChanges().pipe(
@@ -78,5 +76,25 @@ export class HomePage {
             });
         }
     }
+  }
+
+  displayAllJourneys() {
+    this.itemsCollection = this.afDB.collection<Journey>('Journeys');
+    this.journeys = this.itemsCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Journey;
+        const id = a.payload.doc.id;
+        const ref = a.payload.doc.ref;
+        let dateION: string;
+        if (data.Date != null) {
+          dateION = moment(data.Date.toDate()).format("DD/MM/YY H:mm");
+        } else {
+          dateION = '';
+        }
+
+        return { id, ref, dateION, ...data };
+      }))
+    );
+
   }
 }
