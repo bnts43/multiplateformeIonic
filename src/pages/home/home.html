@@ -1,7 +1,6 @@
 <header-nav></header-nav>
 
 <ion-content padding>
-
   <ion-list *ngFor="let journey of journeys | async" >
 		<ion-card  (click)="navigateToJourney(journey.ref, journey.Date)">
       <ion-item>

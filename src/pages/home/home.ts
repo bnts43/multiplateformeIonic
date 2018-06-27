@@ -13,47 +13,72 @@ import * as firebase from "firebase";
 import Timestamp = firebase.firestore.Timestamp;
 
 import * as moment from 'moment';
+import { User } from '../../app/model/user';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  private itemsCollection: AngularFirestoreCollection<Journey>;
-  email: string;
-  
+  private itemsCollection: AngularFirestoreCollection<Journey>;  
   journeys: Observable<Journey[]>;
+  currentUser: User;
  
   constructor(public navCtrl: NavController, afDB: AngularFirestore, private fire: AngularFireAuth) {
-    this.itemsCollection = afDB.collection<Journey>('Journeys');
-    this.journeys = this.itemsCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Journey;
-        const id = a.payload.doc.id;
-        const ref = a.payload.doc.ref;
-        const dateION: string = moment(data.Date.toDate.apply(data.Date) as Date).format("DD/MM/YY H:mm");
-
-        return { id, ref, dateION, ...data };
-      }))
-    );
-    this.email = this.fire.auth.currentUser.email;
+    if (this.fire.auth.currentUser != null) {
+        afDB
+            .collection<User>("Users", 
+                u => u.where('uuID','==',this.fire.auth.currentUser.uid))
+            .valueChanges()
+            .subscribe(u => {
+                this.currentUser = u[0];
+                this.itemsCollection = afDB.collection<Journey>('Journeys', j => j.where('ownerId','==',this.currentUser.uuID));
+                this.journeys = this.itemsCollection.snapshotChanges().pipe(
+                  map(actions => actions.map(a => {
+                    const data = a.payload.doc.data() as Journey;
+                    const id = a.payload.doc.id;
+                    const ref = a.payload.doc.ref;
+                    let dateION: string;
+                    if (data.Date != null) {
+                      dateION = moment(data.Date.toDate()).format("DD/MM/YY H:mm");
+                    } else {
+                      dateION = '';
+                    }
+            
+                    return { id, ref, dateION, ...data };
+                  }))
+                );
+            });
+        console.log(this.currentUser);
+       
+    } else {
+      this.itemsCollection = afDB.collection<Journey>('Journeys');
+    }
+    
   }
 
   navigateToJourney(journeyDocRef?: DocumentReference, journeyDate?: Timestamp) {
     if (journeyDocRef == null) {
-      let newJourney:any = {Depart:'',Destination:''};
+      let newJourney:any = {
+          Depart:'',
+          Destination:'', 
+          ownerId:this.fire.auth.currentUser.uid,
+          Date: firebase.firestore.FieldValue.serverTimestamp()
+        };
       
       this.itemsCollection.add(newJourney).then((newJourneyRef) => 
       { 
         journeyDocRef=newJourneyRef;
-        this.navCtrl.push(TrajetDetail,{'docJourney': journeyDocRef})
+        this.navCtrl
+            .push(TrajetDetail,{'docJourney': journeyDocRef})
+            .catch(e => this.itemsCollection.doc(newJourneyRef.path).delete())
       });
     } else {
       if (journeyDate != null || (journeyDocRef != null && journeyDate == null))
         {
           if (journeyDate == null)
           {
-            journeyDate = Timestamp.fromDate(new Date(Date.now.apply(new Date())));
+            journeyDate = Timestamp.fromDate(new Date(Date.now()));
           }
         this.navCtrl.push(TrajetDetail,
             {

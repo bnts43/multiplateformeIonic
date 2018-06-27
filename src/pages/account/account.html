@@ -1,19 +1,31 @@
 <header-nav></header-nav>
-  <ion-content padding="true" class="has-header">
-    <div style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;">
-      <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
-    </div>
-    <form id="account-form4" class="list">
-      <label class="item item-select" id="account-select1">
-        <span class="input-label">Sexe</span>
-        <select>
-          <option>Homme</option>
-          <option>Femme</option>
-        </select>
-      </label>
-      <ion-item class="range range-light" id="account-range1">Age
-        <input type="range" value="50" min="0" max="100" step="1">
-      </ion-item>
-    </form>
-    <button id="account-button4" class="button button-positive button-block">Enregistrer</button>
-  </ion-content>
+<ion-content padding>
+  <form id="account-form4">
+      <ion-list>
+          <ion-item>
+              <ion-label color="primary">Nom :</ion-label>
+              <ion-input id="trajet-text1" [(ngModel)]="user.name" name="name">
+              </ion-input>   
+          </ion-item>
+          <ion-item>
+              <ion-label>Date de naissance</ion-label> 
+              <ion-datetime displayFormat="DD MM YYYY" pickerFormat="DD MM YYYY" [(ngModel)]="birthDate" name="date_naissance"></ion-datetime>
+          </ion-item>
+      </ion-list>
+      <ion-list radio-group [(ngModel)]="user.genre" name="genre">
+          <ion-list-header>
+            Sexe
+          </ion-list-header>
+          <ion-item>
+              <ion-label>Homme</ion-label>
+              <ion-radio value="homme"></ion-radio>
+          </ion-item>
+          <ion-item>
+              <ion-label>Femme</ion-label>
+              <ion-radio value="femme" ></ion-radio>
+          </ion-item>
+      </ion-list>
+  </form>
+  <button ion-button color="danger" clear block (click)="update()" id="account-button4" >Enregistrer</button>
+  <button ion-button color="danger" clear block (click)="logout()">Se déconnecter</button>
+</ion-content>

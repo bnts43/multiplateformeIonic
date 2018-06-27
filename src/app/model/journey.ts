@@ -14,6 +14,7 @@ export class Journey {
   driver: any;
   id: string;
   ref: DocumentReference;
+  ownerId: string;
 }
 
 export const JOURNEY_PATH = 'Journeys';
