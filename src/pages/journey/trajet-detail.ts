@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, Toast } from 'ionic-angular';
 
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore, AngularFirestoreDocument, DocumentReference } from 'angularfire2/firestore';
@@ -53,33 +53,59 @@ export class TrajetDetail {
 
   }
   reserve(){
-    this.afs.collection<User>('Users', u => u.where('uuID','==',this.fire.auth.currentUser.uid))
+    let toastSaving = this.createToast("sauvegarde en cours");
+    let toastSaved = this.createToast("sauvegarde réussie");
+    
+    toastSaving.present().then( () => {
+        this.afs.collection<User>('Users', u => u.where('uuID','==',this.fire.auth.currentUser.uid))
         .valueChanges().subscribe(u => {
           this.currentUser = u[0];
           let listJ = this.currentUser.listReservedJourneys;
           if (listJ != null) {
-              if (listJ.indexOf(this.docRef) < -1) {
-
-                listJ.push(this.docRef);
-              }
+            if (listJ.indexOf(this.docRef) < -1) {
+              
+              listJ.push(this.docRef);
+            }
           } else {
             let newList : DocumentReference[] = [];
             newList.push(this.docRef);
             listJ = newList;
           }
           this.currentUser.listReservedJourneys = listJ;
-          this.afs.doc<User>(this.currentUser.ref).update(this.currentUser);
+          
+          console.log("auth id => " + this.fire.auth.currentUser.uid);
+          console.log("user id => " + this.currentUser.uuID);
+              this.afs.doc<User>(this.currentUser.ref).update(this.currentUser).then(()=> {
+                toastSaving.dismiss();
+                toastSaved.present();
+              });
         });
+    });
   }
 
   update() {
-
+    let toastSaving = this.createToast("sauvegarde en cours");
+    toastSaving.present();
+    let toastSaved = this.createToast("sauvegarde réussie");
     this.journey.Date = Timestamp.fromDate(new Date(this.date));
-    this.journeyDoc.update(this.journey);
+    this.journeyDoc.update(this.journey).then(()=> {
+      toastSaving.dismiss();
+      toastSaved.present();
+    });
   }
 
   delete() {
     this.navCtrl.push(HomePage).then(()=> this.journeyDoc.delete());
+  }
+
+  createToast(infoMessage: string) : Toast {
+    let newtoast = this.toastCtrl.create({
+      duration: 3000,
+      position: 'top',
+      showCloseButton: true
+    });
+    newtoast.setMessage(infoMessage);
+    return newtoast;
   }
 
 }

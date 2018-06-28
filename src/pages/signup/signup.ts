@@ -44,14 +44,17 @@ export class Signup {
     this.fire.auth.createUserWithEmailAndPassword(this.username.value, this.password.value)
     .then(data => {
       this.alert('Inscription réussie');
-      let newJourney:any = {
+      let newUser:any = {
           name: this.newUser.name,
           email: this.username.value, 
-          uuID: data.user['uid'],
+          uuID: data.user['uid']
         };
 
-      this.afs.collection('Users').add(newJourney).then( u => {
-              this.newUser.ref = u;
+      this.afs.collection('Users').add(newUser).then( newRef => {
+              let newData: any = {
+                ref: newRef
+              };
+              this.afs.doc<User>(newRef).update(newData);
       });
       //this.navigateToHomePage();
     })
