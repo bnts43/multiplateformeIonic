@@ -58,12 +58,16 @@ export class TrajetDetail {
           this.currentUser = u[0];
           let listJ = this.currentUser.listReservedJourneys;
           if (listJ != null) {
-              listJ.push(this.docRef);
+              if (listJ.indexOf(this.docRef) < -1) {
+
+                listJ.push(this.docRef);
+              }
           } else {
             let newList : DocumentReference[] = [];
             newList.push(this.docRef);
             listJ = newList;
           }
+          this.currentUser.listReservedJourneys = listJ;
           this.afs.doc<User>(this.currentUser.ref).update(this.currentUser);
         });
   }
