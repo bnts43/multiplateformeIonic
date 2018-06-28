@@ -19,13 +19,16 @@ import { User } from "../../app/model/user";
   })
 
   
-  export class ReservedJourneys {
+  export class ReservedJourneys  {
     
     journeys: Journey[];
 
     constructor(public navCtrl: NavController, private afs: AngularFirestore, private fire: AngularFireAuth) {
         // recuperer la liste des journeys reservé et les afficher 
-        let userRef = this.afs.collection<User>('users', u => u.where('uuID', '==', this.fire.auth.currentUser.uid));
-        //userRef.valueChanges().subscribe(u=> this.journeys = u[0].listReservedJourneys);
+        this.afs.collection<User>('users', u => u.where('uuID', '==', this.fire.auth.currentUser.uid))
+                .valueChanges()
+                .subscribe(u=> u[0].listReservedJourneys.forEach(docrefj => this.afs.doc<Journey>(docrefj)
+                      .valueChanges()
+                      .subscribe(j => this.journeys.push(j))));
       }
   }
