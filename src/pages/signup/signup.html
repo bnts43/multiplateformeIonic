@@ -4,7 +4,7 @@
     <ion-list>
 
       <ion-item>
-        <ion-label floating>Username</ion-label>
+        <ion-label floating>Email</ion-label>
         <ion-input type="text" #username></ion-input>
       </ion-item>
     
@@ -13,8 +13,19 @@
         <ion-input type="password" #password></ion-input>
       </ion-item>
       
+      <ion-item>
+          <ion-label floating>Votre nom</ion-label>
+          <ion-input type="text" [(ngModel)]="newUser.name" name="name" ></ion-input>
+      </ion-item>
+      
+      <ion-item>
+          <ion-label floating>Votre prénom</ion-label>
+          <ion-input type="text" [(ngModel)]="newUser.prenom" name="prenom" ></ion-input>
+      </ion-item>
+      
+
     </ion-list>
-    <button ion-button ion-button id="signup-button3" class="button button-stable button-block" (click)="registerUser()">Sign up</button>
-    <button id="signup-button7" ion-button clear block color="dark" (click)="navigateToLogin()">Or log in your account</button>
+    <button ion-button ion-button id="signup-button3"  (click)="registerUser()">Sign up</button>
+    <button id="signup-button7" ion-button block color="dark" (click)="navigateToLogin()">Or log in your account</button>
   </form>
 </ion-content>

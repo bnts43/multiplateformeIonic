@@ -8,6 +8,7 @@ import { DocumentReference } from "angularfire2/firestore";
 
 export class User {
     name: string;
+    prenom: string;
     listRatings: Rating[];
     listVehicles: Vehicle[];
     listReservedJourneys : Journey[];

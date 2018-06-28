@@ -8,7 +8,9 @@
       </ion-item>
     </ion-card>
   </ion-list>
-  <button ion-button clear block (click)="navigateToJourney()">Ajouter un trajet</button>
-  <button ion-button clear block (click)="displayAllJourneys()">Afficher tous les trajets</button>
+
+  <button ion-button (click)="navigateToJourney()" icon-start>      <ion-icon name="star"></ion-icon>
+    Ajouter un trajet</button>
+  <button ion-button  color="dark" (click)="displayAllJourneys()" icon-end>Afficher tous les trajets</button>
 </ion-content>
 

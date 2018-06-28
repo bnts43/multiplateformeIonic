@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { Observable } from 'rxjs/Observable';
-import { AngularFirestore, AngularFirestoreDocument, DocumentReference, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 import * as moment from 'moment';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -40,8 +40,12 @@ export class AccountPage {
                       u => {
                         const data = u.payload.doc.data() as User;
                         const id = u.payload.doc.id;
-                        const ref = u.payload.doc.ref;                
-                        return { id, ref, ...data };
+                        if (data.ref == null)
+                            { 
+                              const ref = u.payload.doc.ref;
+                                return { id, ref, ...data };
+                            }
+                        return { id, ...data };
                       })))
                 .subscribe(u => {
                     this.user = u[0];
@@ -53,6 +57,8 @@ export class AccountPage {
                 });
         this.userDoc = this.afs.doc<User>(this.user.ref);
         this.oUser = this.userDoc.valueChanges();
+       } else {
+
        }
       }
 
@@ -64,6 +70,16 @@ export class AccountPage {
         ;
       }
       
+      alert(message: string) {
+
+        this.toastCtrl.create({
+          message: message,
+          duration: 3000,
+          position: 'top',
+          showCloseButton: true
+        }).present();
+      }
+
       update() {
         this.user.date_naissance = Timestamp.fromDate(new Date(this.birthDate));
         this.afs.doc<User>(this.user.ref.path).update(this.user);
