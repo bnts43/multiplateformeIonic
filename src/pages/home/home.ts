@@ -13,6 +13,8 @@ import * as firebase from "firebase";
 import Timestamp = firebase.firestore.Timestamp;
 
 import * as moment from 'moment';
+import { ReservedJourneys } from '../reservedJourneys/reservedJourneys';
+import { User } from '../../app/model/user';
 
 @Component({
   selector: 'page-home',
@@ -21,10 +23,20 @@ import * as moment from 'moment';
 export class HomePage {
   private itemsCollection: AngularFirestoreCollection<Journey>;  
   journeys: Observable<Journey[]>;
+  currentUser: User;
  
   constructor(public navCtrl: NavController, private afDB: AngularFirestore, private fire: AngularFireAuth) {
     if (this.fire.auth.currentUser != null) {
                 this.itemsCollection = afDB.collection<Journey>('Journeys', j => j.where('ownerId','==',this.fire.auth.currentUser.uid));
+                this.afDB
+                .collection<User>("Users", 
+                    u => u.where('uuID','==',this.fire.auth.currentUser.uid))
+                .valueChanges()
+                .subscribe(u => {
+                    if (u[0] != null) {
+                      this.currentUser = u[0];
+                    }
+                });
                 this.journeys = this.itemsCollection.snapshotChanges().pipe(
                   map(actions => actions.map(a => {
                     const data = a.payload.doc.data() as Journey;
@@ -95,6 +107,22 @@ export class HomePage {
         return { id, ref, dateION, ...data };
       }))
     );
+  }
+  displayReservedJourneys(){
 
+    this.journeys.pipe(
+          map(actions => actions.map(
+            j => {
+              if (this.currentUser.listReservedJourneys.findIndex(d=> d == j.ref) != -1) {
+                  return  j ;
+              }
+            })
+          )
+    );/*
+      let journeys : Journey[] = [];
+      myjourneys.subscribe(j => j.forEach(jo => journeys.push(jo)));
+      console.log("my journeys => " + journeys);
+      //this.journeys = myjourneys;*/
   }
 }
+

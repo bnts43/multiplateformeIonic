@@ -11,6 +11,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import * as firebase from "firebase";
 import { User } from "../../app/model/user";
+import { Timestamp } from "rxjs/internal/operators/timestamp";
 
 
 @Component({
@@ -20,15 +21,22 @@ import { User } from "../../app/model/user";
 
   
   export class ReservedJourneys  {
-    
-    journeys: Journey[];
+
+    journeys: Journey[] = [];
+    //private itemsCollection: AngularFirestoreCollection<Journey>;  
+    private itemsCollection: AngularFirestoreCollection<User>;  
+    private itemsJourneys: AngularFirestoreCollection<Journey>;  
 
     constructor(public navCtrl: NavController, private afs: AngularFirestore, private fire: AngularFireAuth) {
-        // recuperer la liste des journeys reservé et les afficher 
-        this.afs.collection<User>('users', u => u.where('uuID', '==', this.fire.auth.currentUser.uid))
+      
+        this.afs
+                .collection<User>("Users", 
+                    u => u.where('uuID','==',this.fire.auth.currentUser.uid))
                 .valueChanges()
-                .subscribe(u=> u[0].listReservedJourneys.forEach(docrefj => this.afs.doc<Journey>(docrefj)
-                      .valueChanges()
-                      .subscribe(j => this.journeys.push(j))));
+                .subscribe(u => {
+                    if (u[0].listReservedJourneys != null) {
+                        u[0].listReservedJourneys.forEach(docRef => this.afs.doc<Journey>(docRef).valueChanges().subscribe(j => this.journeys.push(j)));
+                    }
+                });
       }
   }
