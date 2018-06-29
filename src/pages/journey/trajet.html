@@ -10,6 +10,10 @@
     <form id="trajet-form6" class="list">
       <ion-list>
         <ion-item>
+          <ion-label>Réservé : </ion-label>
+          <ion-toggle (ionChange)="changeBookingStatus()" [(ngModel)]="isBooked" name="isBooked"></ion-toggle>
+        </ion-item>
+        <ion-item>
           <ion-label color="primary">Départ :</ion-label>
           <ion-input id="trajet-text1" [(ngModel)]="journey.Depart" name="Depart"></ion-input>
         </ion-item>

@@ -1,12 +1,14 @@
+<header-nav></header-nav>
 
 <ion-content padding>
-  
-    <ion-list *ngFor="let journey of journeys" >
-          <ion-card>
-        <ion-item>
-            {{journey.Depart}} - {{journey.Destination}}
-        </ion-item>
-      </ion-card>
-    </ion-list>
-  </ion-content>
-  
+  <ion-list *ngFor="let journey of journeys" >
+		<ion-card  (click)="navigateToJourney(journey.docRef, journey.Date)">
+      <ion-item>
+          {{journey.Depart}} - {{journey.Destination}} - {{journey.dateION}}
+      </ion-item>
+    </ion-card>
+  </ion-list>
+
+  <button ion-button  color="dark" (click)="displayAllJourneys()" icon-end>Afficher tous les trajets</button>
+</ion-content>
+

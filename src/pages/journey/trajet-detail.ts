@@ -28,6 +28,7 @@ export class TrajetDetail {
   journeyDate: Timestamp ;
   currentJourney: Journey;
   date: string;
+  isBooked = false;
   private currentUser : User;
 
   constructor(
@@ -43,13 +44,20 @@ export class TrajetDetail {
       } else {
         this.date = "";
       }
-   
+      
       this.docRef = this.navParams.get("docJourney");
       this.journeyDoc = this.afs.doc<Journey>(this.docRef);
       this.oJourney = this.journeyDoc.valueChanges();
       this.oJourney.subscribe((res) => this.journey = res);
       this.afs.collection<User>('Users', u => u.where('uuID','==',this.fire.auth.currentUser.uid))
-            .valueChanges().subscribe(u => this.currentUser = u[0]);
+            .valueChanges().subscribe(u => {
+              this.currentUser = u[0];
+              this.currentUser.listReservedJourneys.forEach(j => {
+                if (j == this.docRef) {
+                  this.isBooked = true;
+                }
+              })
+            });
 
   }
   reserve(){
@@ -108,4 +116,8 @@ export class TrajetDetail {
     return newtoast;
   }
 
+  changeBookingStatus() {
+    this.createToast("Non implémenté").present();
+    this.isBooked != this.isBooked;
+  }
 }

@@ -109,7 +109,7 @@ export class HomePage {
     );
   }
   displayReservedJourneys(){
-
+    this.navCtrl.push(ReservedJourneys);/*
     this.journeys.pipe(
           map(actions => actions.map(
             j => {
@@ -118,11 +118,7 @@ export class HomePage {
               }
             })
           )
-    );/*
-      let journeys : Journey[] = [];
-      myjourneys.subscribe(j => j.forEach(jo => journeys.push(jo)));
-      console.log("my journeys => " + journeys);
-      //this.journeys = myjourneys;*/
+    );*/
   }
 }
 
