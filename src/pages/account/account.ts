@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 
-import { Observable } from 'rxjs/Observable';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 import * as moment from 'moment';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from '../../app/model/user';
 
-import { map } from 'rxjs/operators';
 import * as firebase from "firebase";
 import Timestamp = firebase.firestore.Timestamp;
 import { Login } from '../login/login';
@@ -20,7 +18,6 @@ import { Login } from '../login/login';
 export class AccountPage {
     private userDoc: AngularFirestoreDocument<User>;
     private authUser: firebase.User;
-    private oUser: Observable<User>;
     user: User = new User();
     birthDate: string;
     constructor(
@@ -35,18 +32,7 @@ export class AccountPage {
           this.afs
                 .collection<User>("Users", 
                     u => u.where('uuID','==',this.authUser.uid))
-                .snapshotChanges().pipe(
-                    map(actions => actions.map(
-                      u => {
-                        const data = u.payload.doc.data() as User;
-                        const id = u.payload.doc.id;
-                        if (data.ref == null)
-                            { 
-                              const ref = u.payload.doc.ref;
-                                return { id, ref, ...data };
-                            }
-                        return { id, ...data };
-                      })))
+                .valueChanges()
                 .subscribe(u => {
                     this.user = u[0];
                     if (this.user.date_naissance) {
@@ -56,9 +42,6 @@ export class AccountPage {
                     }
                 });
         this.userDoc = this.afs.doc<User>(this.user.ref);
-        this.oUser = this.userDoc.valueChanges();
-       } else {
-
        }
       }
 
@@ -82,7 +65,7 @@ export class AccountPage {
 
       update() {
         this.user.date_naissance = Timestamp.fromDate(new Date(this.birthDate));
-        this.afs.doc<User>(this.user.ref.path).update(this.user);
+        this.userDoc.update(this.user);
       }
       isCurrentUser() : boolean {
         if (this.authUser.uid == this.user.uuID) {

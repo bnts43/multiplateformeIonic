@@ -19,6 +19,8 @@ import { MomentModule } from 'angular2-moment';
 import { ReservedJourneys } from '../pages/reservedJourneys/reservedJourneys';
 import { AccountPage } from '../pages/account/account';
 import { HeaderNav } from '../pages/header';
+import { SearchPage } from '../pages/search/search-page';
+import { AutocompletePage } from '../pages/search/autocomplete-page';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { HeaderNav } from '../pages/header';
     Login,
     ReservedJourneys,
     HeaderNav,
-    Signup
+    SearchPage,
+    Signup,
+    AutocompletePage
   ],
   imports: [
     BrowserModule,
@@ -48,12 +52,14 @@ import { HeaderNav } from '../pages/header';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    SearchPage,
     HomePage,
     TrajetDetail,
     Login,
     ReservedJourneys,
     AccountPage,
     HeaderNav,
+    AutocompletePage,
     Signup
   ],
   providers: [

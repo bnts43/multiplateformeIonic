@@ -56,7 +56,7 @@ export class Signup {
               };
               this.afs.doc<User>(newRef).update(newData);
       });
-      //this.navigateToHomePage();
+      this.navigateToHomePage();
     })
     .catch(error => {
       console.log('got an error ', error);

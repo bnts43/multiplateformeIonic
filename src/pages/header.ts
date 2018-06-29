@@ -3,6 +3,7 @@ import { NavController } from "ionic-angular";
 import { AccountPage } from "./account/account";
 import { HomePage } from "./home/home";
 import { AngularFireAuth } from "angularfire2/auth";
+import { SearchPage } from "./search/search-page";
 
 @Component({
     selector: 'header-nav',
@@ -28,5 +29,9 @@ import { AngularFireAuth } from "angularfire2/auth";
         } else {
             return true;
         }
+    }
+    OpenSearchPage() {
+        this.navCtrl.push(SearchPage);
+
     }
   }

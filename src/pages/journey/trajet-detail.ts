@@ -54,17 +54,20 @@ export class TrajetDetail {
   }
   reserve(){
     let toastSaving = this.createToast("sauvegarde en cours");
+    let toastWait = this.createToast("veuillez patienter...");
+    while (this.currentUser == null) {
+      toastWait.present();
+    };
+    toastSaving.present();
     let toastSaved = this.createToast("sauvegarde réussie");
     
-    toastSaving.present().then( () => {
-        this.afs.collection<User>('Users', u => u.where('uuID','==',this.fire.auth.currentUser.uid))
-        .valueChanges().subscribe(u => {
-          this.currentUser = u[0];
           let listJ = this.currentUser.listReservedJourneys;
           if (listJ != null) {
-            if (listJ.indexOf(this.docRef) < -1) {
-              
+            if (listJ.findIndex(d => d == this.docRef) == -1) {
+              console.log("ajout à la liste");
               listJ.push(this.docRef);
+            } else {
+              this.createToast("vous avez déjà réservé ce voyage").present();
             }
           } else {
             let newList : DocumentReference[] = [];
@@ -73,14 +76,11 @@ export class TrajetDetail {
           }
           this.currentUser.listReservedJourneys = listJ;
           
-          console.log("auth id => " + this.fire.auth.currentUser.uid);
-          console.log("user id => " + this.currentUser.uuID);
-              this.afs.doc<User>(this.currentUser.ref).update(this.currentUser).then(()=> {
-                toastSaving.dismiss();
-                toastSaved.present();
-              });
-        });
-    });
+          this.afs.doc<User>(this.currentUser.ref).update(this.currentUser).then(()=> {
+            toastSaved.present();
+          });
+
+
   }
 
   update() {

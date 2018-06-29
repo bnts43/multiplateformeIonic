@@ -1,6 +1,5 @@
 import { Rating } from "./rating";
 import { Vehicle } from "./vehicle";
-import { Journey } from "./journey";
 
 import * as firebase from "firebase";
 import Timestamp = firebase.firestore.Timestamp;
