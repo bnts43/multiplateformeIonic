@@ -73,8 +73,6 @@ export class TrajetDetail {
           }
           this.currentUser.listReservedJourneys = listJ;
           
-          console.log("auth id => " + this.fire.auth.currentUser.uid);
-          console.log("user id => " + this.currentUser.uuID);
               this.afs.doc<User>(this.currentUser.ref).update(this.currentUser).then(()=> {
                 toastSaving.dismiss();
                 toastSaved.present();
